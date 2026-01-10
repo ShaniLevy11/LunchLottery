@@ -14,7 +14,7 @@ A modern, responsive web application that uses geolocation and the Geoapify Plac
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="images/Screenshot 2026-01-10 211012.png" alt="Example" width="45%" />
+  <img src="images/Screenshot 2026-01-10 211012.png" alt="Example" />
 </p>
 
 ---
