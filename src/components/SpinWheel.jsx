@@ -5,7 +5,7 @@ const SpinWheel = ({ isSpinning }) => {
         <span className="wheel-emoji">🍽️</span>
       </div>
       <div className="wheel-text">
-        {isSpinning ? 'Finding your restaurant...' : 'Ready to spin!'}
+        {isSpinning ? 'מחפש את המסעדה המושלמת...' : 'מוכן לסיבוב!'}
       </div>
     </div>
   );

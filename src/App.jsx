@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from './hooks/useLocation';
 import { fetchNearbyRestaurants, pickRandomRestaurant } from './services/api';
 import Map from './components/Map';
@@ -7,57 +7,57 @@ import SpinWheel from './components/SpinWheel';
 import './App.css';
 
 /**
- * Main App Component
+ * Main App Component - Hebrew Version
  * 
- * This is the heart of the application. It orchestrates:
- * 1. Getting user's location via browser geolocation
- * 2. Fetching nearby restaurants from Geoapify API
- * 3. Randomly selecting one restaurant
- * 4. Displaying the result on a map
- * 
- * State Flow:
- * - idle: Initial state, waiting for user action
- * - locating: Getting user's GPS position
- * - searching: Fetching restaurants from API
- * - spinning: Animation while "randomly" selecting
- * - result: Showing the chosen restaurant
- * - error: Something went wrong
+ * New Flow:
+ * 1. Start with a centered hero button (no map visible)
+ * 2. After picking a restaurant, reveal the map and details
  */
 
-function App() {
-  // Custom hook for geolocation
-  const { location, error: locationError, loading: locationLoading, getLocation } = useLocation();
+// Floating food emojis for background decoration
+const FloatingEmojis = () => {
+  const emojis = ['🍕', '🍔', '🍣', '🍜', '🥗', '🍝', '🌮', '🥘', '🍱', '🍛'];
   
-  // App state
-  const [appState, setAppState] = useState('idle'); // idle, locating, searching, spinning, result, error
+  return (
+    <div className="floating-emojis">
+      {emojis.map((emoji, i) => (
+        <span
+          key={i}
+          className="floating-emoji"
+          style={{
+            left: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 20}s`,
+            animationDuration: `${15 + Math.random() * 10}s`,
+          }}
+        >
+          {emoji}
+        </span>
+      ))}
+    </div>
+  );
+};
+
+function App() {
+  const { location, error: locationError, getLocation } = useLocation();
+  
+  const [appState, setAppState] = useState('idle');
   const [restaurants, setRestaurants] = useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [error, setError] = useState(null);
 
-  /**
-   * Main function that handles the entire flow:
-   * 1. Get location (if not already available)
-   * 2. Fetch restaurants
-   * 3. Pick a random one
-   */
   const handleFindRestaurant = async () => {
     setError(null);
     setSelectedRestaurant(null);
     
-    // Step 1: Get location if we don't have it
     if (!location) {
       setAppState('locating');
       getLocation();
-      return; // useEffect will continue the flow once location is available
+      return;
     }
     
-    // Step 2: Fetch restaurants
     await searchAndSelect(location);
   };
 
-  /**
-   * Fetches restaurants and selects one randomly
-   */
   const searchAndSelect = async (loc) => {
     try {
       setAppState('searching');
@@ -66,15 +66,12 @@ function App() {
       setRestaurants(nearbyRestaurants);
       
       if (nearbyRestaurants.length === 0) {
-        setError('No restaurants found nearby. Try a different location!');
+        setError('לא נמצאו מסעדות בקרבת מקום. נסה שוב!');
         setAppState('error');
         return;
       }
       
-      // Step 3: Spin animation then select
       setAppState('spinning');
-      
-      // Add suspense with a delay
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       const chosen = pickRandomRestaurant(nearbyRestaurants);
@@ -82,30 +79,26 @@ function App() {
       setAppState('result');
       
     } catch (err) {
-      setError('Failed to fetch restaurants. Please try again.');
+      setError('שגיאה בטעינת מסעדות. נסה שוב.');
       setAppState('error');
     }
   };
 
-  /**
-   * Effect: When location becomes available after requesting it,
-   * continue with the restaurant search
-   */
-  if (location && appState === 'locating') {
-    searchAndSelect(location);
-  }
+  // Effect: When location becomes available after requesting it, continue with the search
+  useEffect(() => {
+    if (location && appState === 'locating') {
+      searchAndSelect(location);
+    }
+  }, [location, appState]);
 
-  /**
-   * Handle location errors
-   */
-  if (locationError && appState === 'locating') {
-    setError(locationError);
-    setAppState('error');
-  }
+  // Effect: Handle location errors
+  useEffect(() => {
+    if (locationError && appState === 'locating') {
+      setError(locationError);
+      setAppState('error');
+    }
+  }, [locationError, appState]);
 
-  /**
-   * Try again with a new random restaurant
-   */
   const handleTryAgain = async () => {
     if (restaurants.length > 0) {
       setAppState('spinning');
@@ -118,9 +111,6 @@ function App() {
     }
   };
 
-  /**
-   * Reset everything and start fresh
-   */
   const handleReset = () => {
     setAppState('idle');
     setSelectedRestaurant(null);
@@ -128,87 +118,95 @@ function App() {
     setError(null);
   };
 
+  // Check if we should show the result view (with map)
+  const showResultView = appState === 'result' && selectedRestaurant;
+
   return (
-    <div className="app">
-      {/* Header */}
-      <header className="header">
-        <h1 className="title">🍴 בתאבון</h1>
-        <p className="subtitle">End the "where should we eat?" debate forever!</p>
-      </header>
+    <div className={`app animated-bg ${showResultView ? 'result-view' : 'hero-view'}`}>
+      <FloatingEmojis />
+      
+      {/* HERO VIEW - Button Only */}
+      {!showResultView && (
+        <div className="hero-container">
+          <div className="hero-content">
+            <h1 className="hero-title">🍴 בתאבון</h1>
+            <p className="hero-subtitle">נמאס לכם לריב על איפה לאכול?</p>
+            
+            {/* Initial State - Big Button */}
+            {appState === 'idle' && (
+              <div className="hero-action">
+                <button className="mega-button" onClick={handleFindRestaurant}>
+                  <span className="mega-button-icon">🎲</span>
+                  <span className="mega-button-text">בחר לי מסעדה!</span>
+                </button>
+                <p className="hero-hint">לחץ ותן לגורל להחליט</p>
+              </div>
+            )}
 
-      {/* Main Content */}
-      <main className="main-content">
-        {/* Left Panel - Controls and Restaurant Info */}
-        <div className="left-panel">
-          {/* Initial State */}
-          {appState === 'idle' && (
-            <div className="welcome-section">
-              <div className="welcome-icon">🎰</div>
-              <h2>Can't decide where to eat?</h2>
-              <p>Let fate decide! We'll find restaurants near you and pick one at random.</p>
-              <button className="primary-button" onClick={handleFindRestaurant}>
-                🎲 Find Me a Restaurant!
-              </button>
-            </div>
-          )}
+            {/* Loading States */}
+            {(appState === 'locating' || appState === 'searching') && (
+              <div className="hero-loading">
+                <div className="loader-large"></div>
+                <p className="loading-text">
+                  {appState === 'locating' 
+                    ? '📍 מאתר את המיקום שלך...' 
+                    : '🔍 מחפש מסעדות בסביבה...'}
+                </p>
+              </div>
+            )}
 
-          {/* Loading States */}
-          {(appState === 'locating' || appState === 'searching') && (
-            <div className="loading-section">
-              <div className="loader"></div>
-              <p>
-                {appState === 'locating' 
-                  ? '📍 Getting your location...' 
-                  : '🔍 Searching for restaurants...'}
-              </p>
-            </div>
-          )}
+            {/* Spinning Animation */}
+            {appState === 'spinning' && (
+              <SpinWheel isSpinning={true} />
+            )}
 
-          {/* Spinning Animation */}
-          {appState === 'spinning' && (
-            <SpinWheel isSpinning={true} />
-          )}
+            {/* Error State */}
+            {appState === 'error' && (
+              <div className="hero-error">
+                <div className="error-icon">😕</div>
+                <p className="error-message">{error}</p>
+                <button className="primary-button" onClick={handleFindRestaurant}>
+                  נסה שוב
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
-          {/* Result */}
-          {appState === 'result' && selectedRestaurant && (
-            <div className="result-section">
+      {/* RESULT VIEW - Map + Details */}
+      {showResultView && (
+        <div className="result-container">
+          <header className="result-header">
+            <h1 className="result-title">🍴 בתאבון</h1>
+          </header>
+
+          <main className="result-content">
+            <div className="result-card-panel">
               <RestaurantCard restaurant={selectedRestaurant} />
               <div className="action-buttons">
                 <button className="secondary-button" onClick={handleTryAgain}>
-                  🎲 Pick Another
+                  🎲 בחר אחרת
                 </button>
                 <button className="outline-button" onClick={handleReset}>
-                  🔄 Start Over
+                  🔄 התחל מחדש
                 </button>
               </div>
               <p className="restaurant-count">
-                Picked from {restaurants.length} nearby restaurants
+                נבחר מתוך {restaurants.length} מסעדות בסביבה
               </p>
             </div>
-          )}
 
-          {/* Error State */}
-          {appState === 'error' && (
-            <div className="error-section">
-              <div className="error-icon">😕</div>
-              <p className="error-message">{error}</p>
-              <button className="primary-button" onClick={handleFindRestaurant}>
-                Try Again
-              </button>
+            <div className="result-map-panel">
+              <Map userLocation={location} restaurant={selectedRestaurant} />
             </div>
-          )}
-        </div>
+          </main>
 
-        {/* Right Panel - Map */}
-        <div className="right-panel">
-          <Map userLocation={location} restaurant={selectedRestaurant} />
+          <footer className="footer">
+            <p>נבנה עם ❤️ כדי לסיים ויכוחים על אוכל</p>
+          </footer>
         </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="footer">
-        <p>Made with ❤️ to end all food arguments</p>
-      </footer>
+      )}
     </div>
   );
 }

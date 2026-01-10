@@ -8,16 +8,19 @@ export const useLocation = () => {
   const getLocation = useCallback(() => {
     // Check if geolocation is supported by the browser
     if (!navigator.geolocation) {
-      setError('Geolocation is not supported by your browser');
+      setError('הדפדפן שלך לא תומך באיתור מיקום');
       return;
     }
 
     setLoading(true);
     setError(null);
 
+    console.log('Requesting location...');
+
     // Request the user's current position
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        console.log('Location received:', position.coords);
         setLocation({
           lat: position.coords.latitude,
           lon: position.coords.longitude
@@ -25,13 +28,14 @@ export const useLocation = () => {
         setLoading(false);
       },
       (err) => {
+        console.error('Geolocation error:', err);
         setError(getErrorMessage(err.code));
         setLoading(false);
       },
       {
-        enableHighAccuracy: true,  // Request precise location
-        timeout: 10000,            // Wait up to 10 seconds
-        maximumAge: 300000         // Accept cached position up to 5 minutes old
+        enableHighAccuracy: false,  // Set to false for faster response
+        timeout: 15000,             // Wait up to 15 seconds
+        maximumAge: 600000          // Accept cached position up to 10 minutes old
       }
     );
   }, []);
@@ -42,12 +46,12 @@ export const useLocation = () => {
 const getErrorMessage = (code) => {
   switch (code) {
     case 1:
-      return 'Location access denied. Please enable location permissions.';
+      return 'הגישה למיקום נדחתה. אנא אפשר גישה למיקום בהגדרות הדפדפן.';
     case 2:
-      return 'Unable to determine your location. Please try again.';
+      return 'לא ניתן לזהות את המיקום שלך. נסה שוב.';
     case 3:
-      return 'Location request timed out. Please try again.';
+      return 'בקשת המיקום נכשלה (timeout). נסה שוב.';
     default:
-      return 'An unknown error occurred.';
+      return 'שגיאה לא ידועה באיתור מיקום.';
   }
 };

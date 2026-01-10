@@ -1,6 +1,6 @@
 /* =====================================================
    BETEAVON - Random Restaurant Picker
-   Main Application Styles
+   Main Application Styles - Hebrew RTL Version
    ===================================================== */
 
 /* App Container */
@@ -8,95 +8,308 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
+  direction: rtl;
+}
+
+/* =====================================================
+   HERO VIEW - Initial Centered Button Screen
+   ===================================================== */
+
+.hero-view {
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
   padding: 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-content {
+  text-align: center;
+  max-width: 600px;
+}
+
+.hero-title {
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 15px;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 50px;
+  font-weight: 400;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mega Button - The Star of the Show */
+.hero-action {
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.mega-button {
+  background: white;
+  border: none;
+  padding: 30px 60px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.mega-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.5s;
+}
+
+.mega-button:hover::before {
+  left: 100%;
+}
+
+.mega-button:hover {
+  transform: scale(1.08) translateY(-5px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+}
+
+.mega-button:active {
+  transform: scale(1.02);
+}
+
+.mega-button-icon {
+  font-size: 4rem;
+  animation: shake 2s infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
+
+.mega-button-text {
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease infinite;
+}
+
+.hero-hint {
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 25px;
+  font-size: 1.1rem;
+}
+
+/* Hero Loading */
+.hero-loading {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  padding: 50px 80px;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.loader-large {
+  width: 80px;
+  height: 80px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top: 5px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 25px;
+}
+
+.loading-text {
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+/* Hero Error */
+.hero-error {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 30px;
+  padding: 50px;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.hero-error .error-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.hero-error .error-message {
+  color: #e74c3c;
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+}
+
+/* =====================================================
+   RESULT VIEW - Map + Details Screen
+   ===================================================== */
+
+.result-view {
+  padding: 20px;
+}
+
+.result-container {
   max-width: 1400px;
   margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  animation: fadeIn 0.6s ease-out;
 }
 
-/* Header Styles */
-.header {
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.result-header {
   text-align: center;
   padding: 20px 0;
-  color: white;
 }
 
-.title {
-  font-size: 3rem;
+.result-title {
+  font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 8px;
+  color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.subtitle {
-  font-size: 1.2rem;
-  opacity: 0.9;
-  font-weight: 400;
-}
-
-/* Main Content - Two Column Layout */
-.main-content {
+.result-content {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
   gap: 30px;
-  flex: 1;
   margin: 20px 0;
 }
 
-/* Left Panel - Controls */
-.left-panel {
+.result-card-panel {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
 }
 
-/* Right Panel - Map */
-.right-panel {
+.result-map-panel {
   min-height: 500px;
 }
 
+/* =====================================================
+   SHARED COMPONENTS
+   ===================================================== */
+
+/* Map Container */
 .map-container {
   height: 100%;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-}
-
-/* Welcome Section */
-.welcome-section {
-  background: white;
   border-radius: 20px;
-  padding: 40px;
+  overflow: hidden;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
+}
+
+/* Spin Wheel - Updated for hero view */
+.spin-wheel {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 30px;
+  padding: 60px 80px;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 0.5s ease-out;
 }
 
-.welcome-icon {
+.wheel-inner {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 30px;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientShift 3s ease infinite;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+}
+
+.spinning .wheel-inner {
+  animation: spinWheel 0.4s linear infinite, gradientShift 3s ease infinite;
+}
+
+@keyframes spinWheel {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.wheel-emoji {
   font-size: 4rem;
-  margin-bottom: 20px;
-  animation: bounce 2s infinite;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.welcome-section h2 {
-  font-size: 1.8rem;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.welcome-section p {
-  color: #666;
-  font-size: 1.1rem;
-  margin-bottom: 30px;
-  line-height: 1.6;
+.wheel-text {
+  color: #555;
+  font-size: 1.4rem;
+  font-weight: 600;
 }
 
 /* Buttons */
 .primary-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 200% 200%;
+  animation: gradientShift 5s ease infinite;
   color: white;
   border: none;
   padding: 18px 40px;
@@ -105,21 +318,17 @@
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   font-family: inherit;
 }
 
 .primary-button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
-}
-
-.primary-button:active {
-  transform: translateY(-1px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
 .secondary-button {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
   padding: 14px 30px;
@@ -128,19 +337,19 @@
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
   font-family: inherit;
 }
 
 .secondary-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 35px rgba(245, 87, 108, 0.5);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
 }
 
 .outline-button {
-  background: transparent;
-  color: #667eea;
-  border: 2px solid #667eea;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.5);
   padding: 12px 25px;
   font-size: 1rem;
   font-weight: 600;
@@ -148,85 +357,12 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: inherit;
+  backdrop-filter: blur(5px);
 }
 
 .outline-button:hover {
-  background: #667eea;
-  color: white;
-}
-
-/* Loading Section */
-.loading-section {
-  background: white;
-  border-radius: 20px;
-  padding: 60px 40px;
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-}
-
-.loader {
-  width: 60px;
-  height: 60px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #667eea;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 20px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.loading-section p {
-  color: #666;
-  font-size: 1.2rem;
-}
-
-/* Spin Wheel */
-.spin-wheel {
-  background: white;
-  border-radius: 20px;
-  padding: 60px 40px;
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-}
-
-.wheel-inner {
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 30px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
-}
-
-.spinning .wheel-inner {
-  animation: spinWheel 0.5s linear infinite;
-}
-
-@keyframes spinWheel {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.wheel-emoji {
-  font-size: 3rem;
-}
-
-.wheel-text {
-  color: #666;
-  font-size: 1.3rem;
-  font-weight: 500;
-}
-
-/* Result Section */
-.result-section {
-  text-align: center;
+  background: rgba(255, 255, 255, 0.3);
+  border-color: white;
 }
 
 .action-buttons {
@@ -234,29 +370,60 @@
   gap: 15px;
   justify-content: center;
   margin-top: 25px;
+  flex-wrap: wrap;
 }
 
 .restaurant-count {
-  color: white;
-  opacity: 0.8;
+  color: rgba(255, 255, 255, 0.85);
   margin-top: 20px;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 /* Restaurant Card */
 .restaurant-card {
   background: white;
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-  text-align: left;
-  animation: slideUp 0.5s ease-out;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+  text-align: right;
+  animation: slideUp 0.6s ease-out;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Restaurant Image */
+.card-image {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  position: relative;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.restaurant-card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+.card-image::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(transparent, rgba(255,255,255,0.8));
 }
 
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(40px);
   }
   to {
     opacity: 1;
@@ -268,9 +435,10 @@
   display: flex;
   align-items: center;
   gap: 15px;
-  margin-bottom: 25px;
-  padding-bottom: 20px;
+  margin: 20px 25px 15px;
+  padding-bottom: 15px;
   border-bottom: 2px solid #f0f0f0;
+  flex-direction: row-reverse;
 }
 
 .card-emoji {
@@ -278,39 +446,43 @@
 }
 
 .restaurant-name {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   color: #333;
   font-weight: 700;
 }
 
 .card-details {
-  margin-bottom: 20px;
+  margin: 0 25px 20px;
 }
 
 .detail-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 0;
+  padding: 12px 0;
   color: #555;
+  flex-direction: row-reverse;
 }
 
 .detail-icon {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   width: 30px;
+  text-align: center;
 }
 
 .detail-text {
-  font-size: 1rem;
+  font-size: 1.05rem;
 }
 
 .detail-text.cuisine {
   text-transform: capitalize;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 600;
+  animation: gradientShift 5s ease infinite;
 }
 
 .detail-link {
@@ -323,97 +495,127 @@
   text-decoration: underline;
 }
 
+.navigate-link {
+  color: #23a6d5;
+  font-weight: 600;
+}
+
 .card-footer {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  margin: -30px;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 200% 200%;
+  animation: gradientShift 5s ease infinite;
+  margin: 0;
   margin-top: 20px;
-  padding: 20px 30px;
-  border-radius: 0 0 20px 20px;
+  padding: 25px 35px;
+  border-radius: 0;
   text-align: center;
 }
 
 .decision-text {
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: 5px;
 }
 
 .sub-text {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.9rem;
-}
-
-/* Error Section */
-.error-section {
-  background: white;
-  border-radius: 20px;
-  padding: 50px 40px;
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-}
-
-.error-icon {
-  font-size: 4rem;
-  margin-bottom: 20px;
-}
-
-.error-message {
-  color: #e74c3c;
-  font-size: 1.1rem;
-  margin-bottom: 25px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
 }
 
 /* Footer */
 .footer {
   text-align: center;
-  padding: 20px;
-  color: rgba(255, 255, 255, 0.7);
+  padding: 25px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
 }
 
-/* Responsive Design */
+/* =====================================================
+   RESPONSIVE DESIGN
+   ===================================================== */
+
 @media (max-width: 900px) {
-  .main-content {
+  .result-content {
     grid-template-columns: 1fr;
   }
   
-  .right-panel {
+  .result-map-panel {
     order: -1;
-    min-height: 300px;
+    min-height: 350px;
   }
   
-  .title {
+  .hero-title {
+    font-size: 3.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.3rem;
+  }
+  
+  .mega-button {
+    padding: 25px 50px;
+  }
+  
+  .mega-button-text {
+    font-size: 1.5rem;
+  }
+  
+  .mega-button-icon {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .hero-title {
+    font-size: 2.8rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 35px;
+  }
+  
+  .mega-button {
+    padding: 20px 40px;
+  }
+  
+  .mega-button-text {
+    font-size: 1.3rem;
+  }
+  
+  .mega-button-icon {
     font-size: 2.5rem;
+  }
+  
+  .spin-wheel {
+    padding: 40px;
+  }
+  
+  .wheel-inner {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .wheel-emoji {
+    font-size: 2.5rem;
+  }
+  
+  .restaurant-card {
+    padding: 25px;
+  }
+  
+  .card-footer {
+    margin: -25px;
+    margin-top: 20px;
+    padding: 20px 25px;
   }
   
   .action-buttons {
     flex-direction: column;
   }
-}
-
-@media (max-width: 500px) {
-  .app {
+  
+  .result-view {
     padding: 10px;
-  }
-  
-  .title {
-    font-size: 2rem;
-  }
-  
-  .welcome-section,
-  .loading-section,
-  .spin-wheel,
-  .error-section {
-    padding: 30px 20px;
-  }
-  
-  .restaurant-card {
-    padding: 20px;
-  }
-  
-  .card-footer {
-    margin: -20px;
-    margin-top: 15px;
-    padding: 15px 20px;
   }
 }

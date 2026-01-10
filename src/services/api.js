@@ -19,7 +19,11 @@ export const fetchNearbyRestaurants = async (lat, lon, radius = 2000) => {
     
     const data = await response.json();
     
-    return data.features || [];
+    const restaurants = (data.features || []).filter(
+      restaurant => restaurant.properties?.name
+    );
+    
+    return restaurants;
   } catch (error) {
     console.error("Error fetching restaurants:", error);
     throw error;
