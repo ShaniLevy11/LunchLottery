@@ -6,7 +6,7 @@ export const useLocation = () => {
   const [loading, setLoading] = useState(false);
 
   const getLocation = useCallback(() => {
-    // Check if geolocation is supported by the browser
+    // Check if supported by the browser
     if (!navigator.geolocation) {
       setError('הדפדפן שלך לא תומך באיתור מיקום');
       return;
@@ -20,7 +20,6 @@ export const useLocation = () => {
     // Request the user's current position
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log('Location received:', position.coords);
         setLocation({
           lat: position.coords.latitude,
           lon: position.coords.longitude
@@ -33,9 +32,9 @@ export const useLocation = () => {
         setLoading(false);
       },
       {
-        enableHighAccuracy: false,  // Set to false for faster response
-        timeout: 15000,             // Wait up to 15 seconds
-        maximumAge: 600000          // Accept cached position up to 10 minutes old
+        enableHighAccuracy: false,
+        timeout: 15000,
+        maximumAge: 600000
       }
     );
   }, []);

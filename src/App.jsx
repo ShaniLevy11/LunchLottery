@@ -125,14 +125,14 @@ function App() {
     <div className={`app animated-bg ${showResultView ? 'result-view' : 'hero-view'}`}>
       <FloatingEmojis />
       
-      {/* HERO VIEW - Button Only */}
+      {}
       {!showResultView && (
         <div className="hero-container">
           <div className="hero-content">
             <h1 className="hero-title">🍴 בתאבון</h1>
             <p className="hero-subtitle">נמאס לכם לריב על איפה לאכול?</p>
             
-            {/* Initial State - Big Button */}
+            {}
             {appState === 'idle' && (
               <div className="hero-action">
                 <button className="mega-button" onClick={handleFindRestaurant}>
@@ -143,7 +143,7 @@ function App() {
               </div>
             )}
 
-            {/* Loading States */}
+            {}
             {(appState === 'locating' || appState === 'searching') && (
               <div className="hero-loading">
                 <div className="loader-large"></div>
@@ -155,12 +155,12 @@ function App() {
               </div>
             )}
 
-            {/* Spinning Animation */}
+            {}
             {appState === 'spinning' && (
               <SpinWheel isSpinning={true} />
             )}
 
-            {/* Error State */}
+            {}
             {appState === 'error' && (
               <div className="hero-error">
                 <div className="error-icon">😕</div>

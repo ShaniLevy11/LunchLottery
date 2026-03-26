@@ -4,11 +4,6 @@ const BASE_URL = "https://api.geoapify.com/v2/places";
 
 export const fetchNearbyRestaurants = async (lat, lon, radius = 2000) => {
   try {
-    // Build the API URL with parameters:
-    // - categories: we search for restaurants specifically
-    // - filter: circular area around user's location
-    // - bias: prioritize results closer to the user
-    // - limit: max 20 results for better performance
     const url = `${BASE_URL}?categories=catering.restaurant&filter=circle:${lon},${lat},${radius}&bias=proximity:${lon},${lat}&limit=20&apiKey=${API_KEY}`;
     
     const response = await fetch(url);

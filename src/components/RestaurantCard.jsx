@@ -153,7 +153,7 @@ const RestaurantCard = ({ restaurant }) => {
           </div>
         )}
 
-        {/* Google Maps navigation link using coordinates */}
+        {}
         {restaurant.geometry?.coordinates && (
           <div className="detail-row">
             <span className="detail-icon">🧭</span>

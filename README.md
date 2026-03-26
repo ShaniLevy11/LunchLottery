@@ -1,4 +1,4 @@
-# 🍴 בתאבון (Beteavon) - Random Restaurant Picker
+# 🍴 LunchLottery
 
 > **End the "where should we eat?" debate forever!**
 
@@ -66,8 +66,8 @@ A modern, responsive web application that uses geolocation and the Geoapify Plac
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/beteavon.git
-   cd beteavon
+   git clone https://github.com/ShaniLevy11/LunchLottery.git
+   cd LunchLottery
    ```
 
 2. **Install dependencies**
@@ -84,8 +84,6 @@ A modern, responsive web application that uses geolocation and the Geoapify Plac
    VITE_GEOAPIFY_API_KEY=your_api_key_here
    ```
    
-   > Get a free API key at [geoapify.com](https://www.geoapify.com/)
-
 4. **Start the development server**
    ```bash
    npm run dev
@@ -102,7 +100,6 @@ A modern, responsive web application that uses geolocation and the Geoapify Plac
 
 ```
 beteavon/
-├── public/
 ├── src/
 │   ├── components/
 │   │   ├── Map.jsx              # Interactive Leaflet map
@@ -116,11 +113,6 @@ beteavon/
 │   ├── App.css                  # Application styles
 │   ├── index.css                # Global styles & animations
 │   └── main.jsx                 # React entry point
-├── .env.example                 # Environment template
-├── .gitignore
-├── index.html
-├── package.json
-└── vite.config.js
 ```
 
 

@@ -52,9 +52,8 @@ const Map = ({ userLocation, restaurant }) => {
     ? [userLocation.lat, userLocation.lon] 
     : defaultCenter;
 
-  // Restaurant position for the marker
   const restaurantPosition = restaurantCoords 
-    ? [restaurantCoords[1], restaurantCoords[0]]  // GeoJSON is [lon, lat], Leaflet needs [lat, lon]
+    ? [restaurantCoords[1], restaurantCoords[0]] 
     : null;
 
   return (
@@ -64,16 +63,16 @@ const Map = ({ userLocation, restaurant }) => {
         zoom={14}
         style={{ height: '100%', width: '100%', borderRadius: '16px' }}
       >
-        {/* OpenStreetMap tiles - free and open source */}
+        {}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
-        {/* Controller to animate map movements */}
+        {}
         <MapController center={restaurantPosition} />
         
-        {/* User location marker */}
+        {}
         {userLocation && (
           <Marker position={[userLocation.lat, userLocation.lon]} icon={userIcon}>
             <Popup>
@@ -82,7 +81,7 @@ const Map = ({ userLocation, restaurant }) => {
           </Marker>
         )}
         
-        {/* Restaurant marker */}
+        {}
         {restaurantPosition && (
           <Marker position={restaurantPosition} icon={restaurantIcon}>
             <Popup>
